@@ -1,2 +1,5 @@
-# timepiece
-Golang package for returning time in pieces
+## timepiece
+Golang package for returning time in pieces.
+
+## Install
+`go get github.com/pladdy/timepiece`
