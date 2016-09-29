@@ -3,16 +3,16 @@
 package timepiece
 
 import (
-  "strconv"
-  "strings"
-  "time"
+	"strconv"
+	"strings"
+	"time"
 )
 
 type TimePiece struct {
-  Year int64
-	Month int64
-	Day int64
-	Hour int64
+	Year   int64
+	Month  int64
+	Day    int64
+	Hour   int64
 	Minute int64
 	Second float64
 }
@@ -28,40 +28,40 @@ type TimePiece struct {
 func TimeToTimePiece(t time.Time) TimePiece {
 	fields := strings.Fields(t.String())
 	date_parts := strings.Split(fields[0], "-")
-  time_parts := strings.Split(fields[1], ":")
+	time_parts := strings.Split(fields[1], ":")
 
-  var pieces TimePiece
-  var err error
+	var pieces TimePiece
+	var err error
 
-  pieces.Year, err = strconv.ParseInt(date_parts[0], 10, 32)
+	pieces.Year, err = strconv.ParseInt(date_parts[0], 10, 32)
 	if err != nil {
 		panic(err)
 	}
 
-  pieces.Month, err = strconv.ParseInt(date_parts[1], 10, 32)
+	pieces.Month, err = strconv.ParseInt(date_parts[1], 10, 32)
 	if err != nil {
 		panic(err)
 	}
 
-  pieces.Day, err = strconv.ParseInt(date_parts[2], 10, 32)
-  if err != nil {
-    panic(err)
-  }
-
-  pieces.Hour, err = strconv.ParseInt(time_parts[0], 10, 32)
-  if err != nil {
-    panic(err)
-  }
-
-  pieces.Minute, err = strconv.ParseInt(time_parts[1], 10, 32)
-  if err != nil {
-    panic(err)
-  }
-
-  pieces.Second, err = strconv.ParseFloat(time_parts[2], 64)
+	pieces.Day, err = strconv.ParseInt(date_parts[2], 10, 32)
 	if err != nil {
 		panic(err)
 	}
 
-  return pieces
+	pieces.Hour, err = strconv.ParseInt(time_parts[0], 10, 32)
+	if err != nil {
+		panic(err)
+	}
+
+	pieces.Minute, err = strconv.ParseInt(time_parts[1], 10, 32)
+	if err != nil {
+		panic(err)
+	}
+
+	pieces.Second, err = strconv.ParseFloat(time_parts[2], 64)
+	if err != nil {
+		panic(err)
+	}
+
+	return pieces
 }
