@@ -25,6 +25,8 @@ type TimePiece struct {
 //    Hour (int64)
 //    Minute (int64)
 //    Second (float64)
+//
+// Usage: timePiece = TimePiece(time.Now())
 func TimeToTimePiece(t time.Time) TimePiece {
 	fields := strings.Fields(t.String())
 	date_parts := strings.Split(fields[0], "-")
@@ -64,4 +66,54 @@ func TimeToTimePiece(t time.Time) TimePiece {
 	}
 
 	return pieces
+}
+
+// String takes an optional format string; if none is provided a default
+// string version of the time pieces is returned.  The string format can be
+// set using the below tokens:
+//    %Y year
+//    %m month
+//    %d day
+//    %H hour
+//    %M minute
+//    %S seconds
+//
+// Example:
+//  tp := TimePiece(time.Now())
+//  fmt.Println(tp.String) // prints string like 2015-01-01 00:00:00
+func (timePiece *TimePiece) String(formatString ...string) string {
+	if formatString == nil {
+		return strconv.FormatInt(timePiece.Year, 10) +
+			"-" + padSingleInt(timePiece.Month) +
+			"-" + padSingleInt(timePiece.Day) +
+			" " + padSingleInt(timePiece.Hour) +
+			":" + padSingleInt(timePiece.Minute) +
+			":" + strconv.FormatFloat(timePiece.Second, 'f', -1, 64)
+	} else {
+		firstAndOnly := formatString[0]
+		tokens := make(map[string]string)
+		tokens["%Y"] = strconv.FormatInt(timePiece.Year, 10)
+		tokens["%m"] = padSingleInt(timePiece.Month)
+		tokens["%d"] = padSingleInt(timePiece.Day)
+		tokens["%H"] = padSingleInt(timePiece.Hour)
+		tokens["%M"] = padSingleInt(timePiece.Minute)
+		tokens["%S"] = strconv.FormatFloat(timePiece.Second, 'f', -1, 64)
+
+		for token, replacement := range tokens {
+			firstAndOnly = strings.Replace(firstAndOnly, token, replacement, -1)
+		}
+
+		return firstAndOnly
+	}
+}
+
+/* Private */
+
+// helpfer function to pad a number with a leading 0
+func padSingleInt(number int64) string {
+	numberString := strconv.FormatInt(number, 10)
+	if len(numberString) == 1 {
+		return "0" + numberString
+	}
+	return numberString
 }
