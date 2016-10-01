@@ -9,6 +9,9 @@ Still this is good practice for me and helpful for me learning Go.
 ## Test
 `go test`
 
+## Docs
+`godoc github.com/pladdy/timepiece`
+
 ## Example
 ```go
 package main
