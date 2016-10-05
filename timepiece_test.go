@@ -12,7 +12,7 @@ var (
 )
 
 func TestTimeToPieces(t *testing.T) {
-	expected := TimePiece{2016, 12, 25, 0, 13, 46}
+	expected := TimePiece{2016, 12, "12", 25, "25", 0, 13, 46}
 
 	pieces_reflection := reflect.ValueOf(&pieces).Elem()
 	expected_reflection := reflect.ValueOf(&expected).Elem()

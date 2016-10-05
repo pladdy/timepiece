@@ -3,18 +3,21 @@
 package timepiece
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 	"time"
 )
 
 type TimePiece struct {
-	Year   int64
-	Month  int64
-	Day    int64
-	Hour   int64
-	Minute int64
-	Second float64
+	Year        int64
+	Month       int64
+	PaddedMonth string
+	Day         int64
+	PaddedDay   string
+	Hour        int64
+	Minute      int64
+	Second      float64
 }
 
 // Given a time.Time type return a struct with the time broken into the
@@ -45,7 +48,17 @@ func TimeToTimePiece(t time.Time) TimePiece {
 		panic(err)
 	}
 
+	pieces.PaddedMonth = fmt.Sprintf("%02d", pieces.Month)
+	if err != nil {
+		panic(err)
+	}
+
 	pieces.Day, err = strconv.ParseInt(date_parts[2], 10, 32)
+	if err != nil {
+		panic(err)
+	}
+
+	pieces.PaddedDay = fmt.Sprintf("%02d", pieces.Day)
 	if err != nil {
 		panic(err)
 	}
