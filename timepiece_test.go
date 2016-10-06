@@ -12,8 +12,7 @@ var (
 )
 
 func TestReplaceTime(t *testing.T) {
-	testString := "The Year is $Year"
-	result := string(ReplaceTime([]byte(testString), pieces))
+	result := string(ReplaceTime("The Year is $Year", pieces))
 	expectedString := "The Year is 2016"
 
 	if result != expectedString {

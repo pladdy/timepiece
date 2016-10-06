@@ -18,4 +18,8 @@ func main() {
 	fmt.Println(pieces.Year)     // nothing special
 	fmt.Println(pieces.String()) // i know, not that great either but i was proud
 	fmt.Println(pieces.String("The year %Y was cool, on %m-%d-%Y at %H:%M:%S I got some presents!"))
+
+	// can also replace timePieces in strings; must match field names in struct
+	// prefaced with a dollar sign
+	fmt.Println(timepiece.ReplaceTime("The year is $Year", pieces))
 }

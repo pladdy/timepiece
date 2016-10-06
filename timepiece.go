@@ -23,24 +23,23 @@ type TimePiece struct {
 
 // Given a slice of bytes, replace any timePiece variables in them with
 // the values of the timePiece struct passed in
-func ReplaceTime(contents []byte, timePiece TimePiece) []byte {
+func ReplaceTime(contents string, timePiece TimePiece) string {
 	// using reflection, try to replace any var that shares a field name with
 	// the TimePiece struct
-	stringContents := string(contents)
 	piecesOfTime := reflect.ValueOf(&timePiece).Elem()
 
 	for i := 0; i < piecesOfTime.NumField(); i++ {
 		fieldName := piecesOfTime.Type().Field(i).Name
 		fieldValue := piecesOfTime.Field(i)
 
-		stringContents = strings.Replace(
-			stringContents,
+		contents = strings.Replace(
+			contents,
 			"$"+fieldName,
 			fmt.Sprintf("%v", fieldValue),
 			-1)
 	}
 
-	return []byte(stringContents)
+	return contents
 }
 
 // Given a time.Time type return a struct with the time broken into the
