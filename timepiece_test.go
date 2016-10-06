@@ -7,9 +7,19 @@ import (
 )
 
 var (
-	test_time = time.Date(2016, 12, 25, 0, 13, 46, 0, time.UTC)
-	pieces    = TimeToTimePiece(test_time)
+	testTime = time.Date(2016, 12, 25, 0, 13, 46, 0, time.UTC)
+	pieces   = TimeToTimePiece(testTime)
 )
+
+func TestReplaceTime(t *testing.T) {
+	testString := "The Year is $Year"
+	result := string(ReplaceTime([]byte(testString), pieces))
+	expectedString := "The Year is 2016"
+
+	if result != expectedString {
+		t.Error("expected", expectedString, "got", result)
+	}
+}
 
 func TestTimeToPieces(t *testing.T) {
 	expected := TimePiece{2016, 12, "12", 25, "25", 0, 13, 46}
