@@ -21,11 +21,14 @@ type TimePiece struct {
 	Second      float64
 }
 
-// Given a slice of bytes, replace any timePiece variables in them with
-// the values of the timePiece struct passed in
+// Given a string, replace any timePiece variables in them (they'd be prefaeced
+// with a '$') with the actual values of the timePiece struct passed with the
+// string
+// Example: "$Month" should get replaced with the actual struct's Month field
+//          value
 func ReplaceTime(contents string, timePiece TimePiece) string {
-	// using reflection, try to replace any var that shares a field name with
-	// the TimePiece struct
+	// using reflection, try to replace any word that matches a field name with
+	// the TimePiece struct as long as it also is prefaced with a $
 	piecesOfTime := reflect.ValueOf(&timePiece).Elem()
 
 	for i := 0; i < piecesOfTime.NumField(); i++ {
@@ -71,9 +74,6 @@ func TimeToTimePiece(t time.Time) TimePiece {
 	}
 
 	pieces.PaddedMonth = fmt.Sprintf("%02d", pieces.Month)
-	if err != nil {
-		panic(err)
-	}
 
 	pieces.Day, err = strconv.ParseInt(date_parts[2], 10, 32)
 	if err != nil {
@@ -81,9 +81,6 @@ func TimeToTimePiece(t time.Time) TimePiece {
 	}
 
 	pieces.PaddedDay = fmt.Sprintf("%02d", pieces.Day)
-	if err != nil {
-		panic(err)
-	}
 
 	pieces.Hour, err = strconv.ParseInt(time_parts[0], 10, 32)
 	if err != nil {
