@@ -119,19 +119,19 @@ func TimeToTimePiece(t time.Time) TimePiece {
 func (timePiece *TimePiece) String(formatString ...string) string {
 	if formatString == nil {
 		return strconv.FormatInt(timePiece.Year, 10) +
-			"-" + padSingleInt(timePiece.Month) +
-			"-" + padSingleInt(timePiece.Day) +
-			" " + padSingleInt(timePiece.Hour) +
-			":" + padSingleInt(timePiece.Minute) +
+			"-" + fmt.Sprintf("%02d", timePiece.Month) +
+			"-" + fmt.Sprintf("%02d", timePiece.Day) +
+			" " + fmt.Sprintf("%02d", timePiece.Hour) +
+			":" + fmt.Sprintf("%02d", timePiece.Minute) +
 			":" + strconv.FormatFloat(timePiece.Second, 'f', -1, 64)
 	} else {
 		firstAndOnly := formatString[0]
 		tokens := make(map[string]string)
 		tokens["%Y"] = strconv.FormatInt(timePiece.Year, 10)
-		tokens["%m"] = padSingleInt(timePiece.Month)
-		tokens["%d"] = padSingleInt(timePiece.Day)
-		tokens["%H"] = padSingleInt(timePiece.Hour)
-		tokens["%M"] = padSingleInt(timePiece.Minute)
+		tokens["%m"] = fmt.Sprintf("%02d", timePiece.Month)
+		tokens["%d"] = fmt.Sprintf("%02d", timePiece.Day)
+		tokens["%H"] = fmt.Sprintf("%02d", timePiece.Hour)
+		tokens["%M"] = fmt.Sprintf("%02d", timePiece.Minute)
 		tokens["%S"] = strconv.FormatFloat(timePiece.Second, 'f', -1, 64)
 
 		for token, replacement := range tokens {
@@ -140,15 +140,4 @@ func (timePiece *TimePiece) String(formatString ...string) string {
 
 		return firstAndOnly
 	}
-}
-
-/* Private */
-
-// helpfer function to pad a number with a leading 0
-func padSingleInt(number int64) string {
-	numberString := strconv.FormatInt(number, 10)
-	if len(numberString) == 1 {
-		return "0" + numberString
-	}
-	return numberString
 }
