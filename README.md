@@ -1,3 +1,5 @@
+[![Go Report Card](https://goreportcard.com/badge/github.com/pladdy/timepiece)](https://goreportcard.com/report/github.com/pladdy/timepiece)
+
 ## timepiece
 Golang package for returning time in pieces.  It conquers time, one piece at a
 time!  There is probably a better way to do this and it may already exist.

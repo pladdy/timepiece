@@ -23,20 +23,20 @@ func TestReplaceTime(t *testing.T) {
 func TestTimeToPieces(t *testing.T) {
 	expected := TimePiece{2016, 12, "12", 25, "25", 0, 13, 46}
 
-	pieces_reflection := reflect.ValueOf(&pieces).Elem()
-	expected_reflection := reflect.ValueOf(&expected).Elem()
+	piecesReflection := reflect.ValueOf(&pieces).Elem()
+	expectedReflection := reflect.ValueOf(&expected).Elem()
 
 	// loop through structs and compare fields to each other
-	for i := 0; i < pieces_reflection.NumField(); i++ {
-		pieces_field := pieces_reflection.Field(i)
-		expeced_field := expected_reflection.Field(i)
+	for i := 0; i < piecesReflection.NumField(); i++ {
+		piecesField := piecesReflection.Field(i)
+		expectedField := expectedReflection.Field(i)
 
-		if pieces_field.Interface() != expeced_field.Interface() {
+		if piecesField.Interface() != expectedField.Interface() {
 			t.Error(
 				"expected",
-				expeced_field.Interface(),
+				expectedField.Interface(),
 				"got",
-				pieces_field.Interface(),
+				piecesField.Interface(),
 			)
 		}
 	}
